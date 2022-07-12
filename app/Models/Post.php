@@ -11,7 +11,6 @@ class Post extends Model
 
 
     protected $guarded = ['id'];
-
-
     // protected $fillabe = ['title', 'exerpt', 'body'];
+
 }
