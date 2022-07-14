@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File;
 
 
 use App\Models\Post;
+use App\Models\User;
+
 
 use \Spatie\YamlFrontMatter\YamlFrontMatter;
 
@@ -20,14 +22,15 @@ use \Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
+//  USEFUL -----------------------------------------------
+// Listen all query played + bindings
+// \Illuminate\Support\Facades\DB::listen(function($query) {
+//     logger($query->sql, $query->bindings);
+// });
+// --------------------------------------------------------
+
 Route::get('/', function () {
-
-    // Listen all query played + bindings
-    // \Illuminate\Support\Facades\DB::listen(function($query) {
-    //     logger($query->sql, $query->bindings);
-    // });
-
-    return view('posts', ['posts' => Post::with('category')->get()]);
+    return view('posts', ['posts' => Post::latest()->with(['category', 'author'])->get()]);
 });
 
 Route::get('posts/{post:slug}', function (Post $post) { // Post::where('slug', $post)->first()
@@ -38,5 +41,12 @@ Route::get('posts/{post:slug}', function (Post $post) { // Post::where('slug', $
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'posts' => $category->posts
+    ]);
+});
+
+
+Route::get('authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'posts' => $author->posts
     ]);
 });

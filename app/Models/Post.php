@@ -13,6 +13,9 @@ class Post extends Model
     protected $guarded = [];
     // protected $fillabe = ['title', 'exerpt', 'body'];
 
+    // Always load linked class. Use ->without(['category', 'author']) to selectively disable.
+    protected $with = ['category', 'author'];
+
 
     public function category(){
         // hasOne, hasMany, belongsTo, belongsToMany
@@ -20,8 +23,8 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }
