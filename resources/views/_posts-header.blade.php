@@ -25,7 +25,7 @@
                 </x-dropdown-item>
                 @foreach ($categories as $category)
                     <x-dropdown-item
-                        href="/categories/{{$category->slug}}" :active='request()->is("categories/{$category->slug}")'>
+                        href="?category={{$category->slug}}" :active='request()->is("categories/{$category->slug}")'>
                         {{ ucfirst($category->name) }}
                     </x-dropdown-item>
                 @endforeach
