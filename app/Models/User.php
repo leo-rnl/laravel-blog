@@ -38,9 +38,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Accessor -> exact name setPropertyAttribute()
+    public function setPasswordAttribute($password) {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+//    Mutator -> exact name getPropertyAttribute()
+    public function getUsernameAttribute($username)
+    {
+        return ucwords($username); // overwrite $jane->username
+    }
+
 
 
     public function posts() {
         return $this->hasMany(Post::class);
     }
 }
+
+
