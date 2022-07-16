@@ -53,5 +53,8 @@
                 </div>
             </div>
         </footer>
+
     </section>
+
+   <x-flash></x-flash>
 </body>
