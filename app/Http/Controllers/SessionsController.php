@@ -10,38 +10,43 @@ class SessionsController extends Controller
 {
 
 
-
-    public function create() {
+    public function create()
+    {
         return view('sessions.create');
     }
 
     /**
      * @throws ValidationException
      */
-    public function store() {
+    public function store()
+    {
         $attributes = request()->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        // If success auth
-        if(auth()->attempt($attributes)) {
-            session()->regenerate();
-            // Session fixation -> Security improvement
+        // If auth failed
+        if (!auth()->attempt($attributes)) {
 
-            return redirect('/')->with('success', 'Welcome back!');
+            // Auth failed
+            //        return back()->withErrors('email', "Wrong credential");
+            //         SAME THING AS =>
+
+            throw ValidationException::withMessages([
+                'email' => 'Your provided credentials could not be verified.'
+            ]);
         }
 
-        // Auth failed
-//        return back()->withErrors('email', "Wrong credential");
-//         SAME THING AS =>
+        // If success auth
 
-        throw ValidationException::withMessages([
-            'email' => 'Your provided credentials could not be verified.'
-        ]);
+        // Session fixation -> Security improvement
+        session()->regenerate();
+
+        return redirect('/')->with('success', 'Welcome back!');
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         auth()->logout();
 
         return redirect('/')->with('success', 'GoodBye!');
