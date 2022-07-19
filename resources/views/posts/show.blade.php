@@ -16,7 +16,7 @@
                         <img src="/images/lary-avatar.svg" alt="Lary avatar">
                         <div class="ml-3 text-left">
                             <h5 class="font-bold">
-                                <a href="?author={{ $post->author->username  }}" >{{$post->author->name}}</a>
+                                <a href="?author={{ $post->author->username  }}">{{$post->author->name}}</a>
                             </h5>
                         </div>
                     </div>
@@ -52,6 +52,14 @@
                         {!! $post->body !!}
                     </div>
                 </div>
+
+                <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                    <x-post-comment></x-post-comment>
+                    <x-post-comment></x-post-comment>
+                    <x-post-comment></x-post-comment>
+                    <x-post-comment></x-post-comment>
+                </section>
+
             </article>
         </main>
     </section>
