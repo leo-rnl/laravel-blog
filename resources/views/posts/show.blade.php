@@ -54,47 +54,7 @@
                 </div>
 
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
-                    @auth
-
-                        <x-pannel>
-
-                            <form method="POST" action="/posts/{{ $post->slug  }}/comments">
-                                @csrf
-
-                                <header class="flex space-x-4 items-center">
-                                    <img class="rounded-xl" src="https://i.pravatar.cc/60?u={{ auth()->id() }}"
-                                         alt="avatar">
-
-                                    <h2>
-                                        Want to participate ?
-                                    </h2>
-
-                                </header>
-                                <div class="mt-6">
-                                <textarea
-                                    name="body"
-                                    id="body"
-                                    class="w-full text-sm focus:outline-none focus:ring"
-                                    cols="30" rows="6"
-                                    placeholder="Quick, thing of something to say!"></textarea>
-                                </div>
-
-                                <div class="flex justify-end mt-10 border-t border-gray-200 pt-6 ">
-                                    <button
-                                        class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 hover:bg-blue-600 rounded-2xl"
-                                        type="submit">Post
-                                    </button>
-                                </div>
-
-                            </form>
-                        </x-pannel>
-                    @else
-
-                        <p class="font-semibold">
-                            <a href="/login" class="hover:underline">Log in</a> or <a href="/register" class="hover:underline">register</a> to leave a comment!
-                        </p>
-
-                    @endauth
+                   @include('posts._add-comment-form')
 
                     @foreach($post->comments as $comment)
                         <x-post-comment :comment="$comment"></x-post-comment>
