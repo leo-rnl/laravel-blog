@@ -33,7 +33,11 @@ use \Spatie\YamlFrontMatter\YamlFrontMatter;
 // });
 // --------------------------------------------------------
 
-Route::get('ping', function() {
+Route::post('newsletter', function () {
+
+    request()->validate([
+        'email' => 'required|email'
+    ]);
 
     $mailchimp = new \MailchimpMarketing\ApiClient();
 
@@ -42,12 +46,22 @@ Route::get('ping', function() {
         'server' => 'us8'
     ]);
 
-    $response = $mailchimp->lists->addListMember("ab5cf80bc4", [
-        "email_address" => "david399902@hotmail.com",
-        "status" => "subscribed",
-    ]);
+    try {
 
-    dd($response);
+        $response = $mailchimp->lists->addListMember("ab5cf80bc4", [
+            "email_address" => request('email'),
+            "status" => "subscribed",
+        ]);
+
+    } catch (\Exception $e) {
+        throw Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'This email could not be added to our newsletter list'
+        ]);
+    }
+
+    return redirect('/')
+        ->with('success', 'You are now signed up for our newsletter!');
+
 });
 
 Route::get('/', [PostController::class, 'index'])->name('home');
