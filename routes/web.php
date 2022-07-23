@@ -33,6 +33,23 @@ use \Spatie\YamlFrontMatter\YamlFrontMatter;
 // });
 // --------------------------------------------------------
 
+Route::get('ping', function() {
+
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us8'
+    ]);
+
+    $response = $mailchimp->lists->addListMember("ab5cf80bc4", [
+        "email_address" => "david399902@hotmail.com",
+        "status" => "subscribed",
+    ]);
+
+    dd($response);
+});
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post:slug}', [PostController::class, 'show'])->name('post');
