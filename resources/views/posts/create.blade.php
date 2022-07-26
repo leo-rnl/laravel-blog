@@ -1,11 +1,12 @@
 <x-layout>
 
 
-    <section class="px-6 py-8">
+    <section class="px-6 py-8 max-w-md mx-auto">
+        <h1 class="text-xl uppercase font-bold mb-10">Publish new post</h1>
 
         <x-pannel class="max-w-sm mx-auto">
 
-            <form method="POST" action="/admin/posts">
+            <form method="POST" action="/admin/posts" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-6">
@@ -86,6 +87,22 @@
 
                         @endforeach
                     </select>
+
+                    <div class="mb-6">
+                        <label for="thumbnail" class="block mb-2 uppercase font-bold text-xs text-gray-700">
+                            Thumbnail
+                        </label>
+                        <input class="border border-gray-400 p-2 w-full rounded"
+                               type="file"
+                               name="thumbnail"
+                               id="thumbnail"
+                               required
+                        >
+                        @error('thumbnail')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
+
 
                     @error('category')
                     <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
