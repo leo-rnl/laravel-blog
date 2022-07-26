@@ -28,7 +28,7 @@
             </div>
 
             <div class="flex justify-end mt-10 border-t border-gray-200 pt-6 ">
-                <x-primary-button>Post</x-primary-button>
+                <x-form.button>Post</x-form.button>
             </div>
 
         </form>
