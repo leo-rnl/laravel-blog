@@ -28,8 +28,17 @@
                         <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name  }}!</button>
                     </x-slot>
 
-                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
-                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+{{--                    @can('admin')--}}
+{{--                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>--}}
+{{--                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>--}}
+{{--                    @endcan--}}
+
+{{--                Work's thanks to AppServiceProvider Blade declaration        --}}
+                    @admin
+                        <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                    @endadmin
+
                     <x-dropdown-item href="#" x-data="{}" @click.prevent="document.getElementById('logout-form').submit()">Log Out</x-dropdown-item>
 
 

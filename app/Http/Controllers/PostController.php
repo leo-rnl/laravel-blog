@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
     public function index()
     {
+        // Return bool of abilities
+//        dd(auth()->user()->cannot('admin'));
 
-
+        // Automatic 403
+//        $this->authorize('admin');
+//
         return view('posts.index', [
             'posts' => Post::latest()->filter(
                 request(['search', 'category', 'author'])
